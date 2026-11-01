@@ -36,3 +36,5 @@ Codex is installed with Bun in the image. Runtime state stays in the mounted hom
 Fish is the default shell. The image includes Starship, Fisher, and `chelokot/starship-show-on-command.fish`; default fish and Starship configs are copied into `/etc/skel`.
 
 `host/dev` is the host-side `dev` command: a fish shell in the running container in the current directory, straight through `podman exec`.
+
+T3 Code is installed from the latest nightly AppImage at build time, so it follows the daily image. `host/t3code` is the host-side `t3code` command that starts it in the container; it is also what T3 Code registers for `t3code://` links.

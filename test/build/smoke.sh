@@ -57,6 +57,7 @@ required_bins=(
   sqlite3
   starship
   systemctl
+  t3code
   terraform
   ts-node
   tsc
@@ -148,6 +149,8 @@ for remote in podman docker; do
 done
 
 chatgpt --version || test -x /usr/bin/chatgpt
+test -r /usr/share/applications/t3code.desktop
+test -r /usr/share/icons/hicolor/512x512/apps/t3code.png
 nix --version
 systemctl --version >/dev/null
 machine --version

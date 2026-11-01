@@ -26,6 +26,18 @@ RUN curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm
     install -m 0755 /tmp/helmfile /usr/local/bin/helmfile && \
     rm -f /tmp/helmfile /tmp/helmfile.tar.gz
 
+RUN T3CODE_URL="$(curl -fsSL 'https://api.github.com/repos/pingdotgg/t3code/releases?per_page=20' | jq -r 'first(.[] | select(.prerelease)) | .assets[] | select(.name | endswith("-x86_64.AppImage")) | .browser_download_url')" && \
+    curl -fsSL "$T3CODE_URL" -o /tmp/t3code.AppImage && \
+    chmod +x /tmp/t3code.AppImage && \
+    cd /tmp && /tmp/t3code.AppImage --appimage-extract > /dev/null && \
+    mv /tmp/squashfs-root /opt/t3code && \
+    chmod 4755 /opt/t3code/chrome-sandbox && \
+    ln -s /opt/t3code/AppRun /usr/local/bin/t3code && \
+    cp -r /opt/t3code/usr/share/icons/hicolor /usr/share/icons/ && \
+    sed -e 's/^Exec=AppRun /Exec=t3code /' -e 's/^StartupWMClass=.*/StartupWMClass=com.t3tools.T3Code/' /opt/t3code/t3code.desktop > /usr/share/applications/t3code.desktop && \
+    rm -f /tmp/t3code.AppImage
+ENV T3CODE_DESKTOP_LAUNCHER_PATH=t3code
+
 COPY packages/pipx.txt /usr/share/dev/packages/
 RUN sed 's/#.*//' /usr/share/dev/packages/pipx.txt | xargs -r -n1 pipx install && \
     pipx inject python-openstackclient python-cinderclient python-heatclient python-glanceclient

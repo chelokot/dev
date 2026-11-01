@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+exec podman exec --user "$USER" --workdir "$HOME" dev t3code "$@"
