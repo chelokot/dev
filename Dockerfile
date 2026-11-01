@@ -105,4 +105,6 @@ RUN for bin in dnf pipx npm; do \
 COPY test/build/ /test/build/
 RUN bash -x /test/build/smoke.sh
 
+RUN find / -xdev \( -path /proc -o -path /sys -o -path /dev \) -prune -o -type d -exec touch {} +
+
 LABEL org.containers.toolbox="true"
