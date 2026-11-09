@@ -1,0 +1,3 @@
+awscli
+gallery-dl
+poetry
