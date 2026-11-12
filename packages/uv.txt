@@ -1,3 +1,4 @@
 awscli
 gallery-dl
 poetry
+yt-dlp
